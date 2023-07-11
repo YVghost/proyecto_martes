@@ -161,7 +161,8 @@ long buscarJuguetePorId(char nombreArchivo[])
     return posicion;
 }
 
-void leerJuguetes(char nombreArchivo[]){
+void leerJuguetes(char nombreArchivo[], int co){
+    
     FILE *archivo;
     char id[50];
     char nombre[50];
@@ -172,7 +173,7 @@ void leerJuguetes(char nombreArchivo[]){
     {
         printf("no se pudo abrir el archivo");
     }
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < co; i++)
     {
          fscanf(archivo,"%s %s %f %d",&id,&nombre,&precio,&cantidad);
          printf("%s %s %f %d\n",id,nombre,precio,cantidad);

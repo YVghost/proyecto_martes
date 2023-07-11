@@ -1,0 +1,6 @@
+1111 Pelota 5.00 1
+2222 Peluche 3.00 3
+3333 Carro 8.00 1
+4444 Lego 16.00 1
+5555 Barbie 5.000 1
+0000 ELIMINADO 0.00 0

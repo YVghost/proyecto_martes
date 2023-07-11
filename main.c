@@ -18,11 +18,13 @@ int main()
     FILE *archivo;
 
     archivo = fopen(nombreArchivo, "w+");
+    int co = 5;
 
     if (archivo == NULL)
     {
         crearArchivo(nombreArchivo);
         guardarJuguetes(nombreArchivo, nombres);
+   
     }
     else
     {
@@ -37,11 +39,12 @@ int main()
             switch (opcion)
             {
             case 'a':
-                leerJuguetes(nombreArchivo);
+                leerJuguetes(nombreArchivo, co);
                 break;
 
             case 'b':
                 ingresarJuguete(nombreArchivo);
+                co++;
                 break;
 
             case 'c':
