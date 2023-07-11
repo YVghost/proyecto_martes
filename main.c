@@ -23,8 +23,6 @@ int main()
     if (archivo == NULL)
     {
         crearArchivo(nombreArchivo);
-        guardarJuguetes(nombreArchivo, nombres);
-   
     }
     else
     {
