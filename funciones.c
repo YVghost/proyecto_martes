@@ -80,7 +80,7 @@ void cambiarEstado(char nombreArchivo[], long posicion)
     int cantidad;
     int nuevoEstado;
     
-    printf("Indique el nuevo estado: ");
+    printf("Indique la nueva cantidad: ");
     scanf("%d", &nuevoEstado);
     
     archivo = fopen(nombreArchivo, "r+");
@@ -93,7 +93,7 @@ void cambiarEstado(char nombreArchivo[], long posicion)
         fseek(archivo, posicion, 0);
         fscanf(archivo, "%s %s %f %d", id, nombre, &precio, &cantidad);
         fseek(archivo, posicion, 0);
-        fprintf(archivo, "\n%s %s %.2f %d", id, nombre, precio, nuevoEstado);
+        fprintf(archivo, "\n%s %s %.2f %d", id, nombre, precio, cantidad=nuevoEstado);
         fclose(archivo);
     }
 }
