@@ -5,3 +5,4 @@ void ingresarJuguete(char nombreArchivo[]);
 void cambiarEstado(char nombreArchivo[],long posicion);
 void eliminar(char nombreArchivo[],long posicion);
 long buscarJuguetePorId(char nombreArchivo[]);
+void leerJuguetes(char nombreArchivo[]);
