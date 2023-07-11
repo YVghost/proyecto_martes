@@ -26,6 +26,7 @@ int main()
     }
     else
     {
+        guardarJuguetes(nombreArchivo, nombres);
         int menus = 1;
         do
         {

@@ -165,15 +165,17 @@ void leerJuguetes(char nombreArchivo[]){
     FILE *archivo;
     char id[50];
     char nombre[50];
-    archivo=fopen("nombre","r+");
+    float precio;
+    int cantidad;
+    archivo=fopen(nombreArchivo,"r+");
     if (archivo==NULL)
     {
         printf("no se pudo abrir el archivo");
     }
     for (int i = 0; i < 5; i++)
     {
-         fscanf(archivo,"%s %s",&id,&nombre);
-         printf("%s %s\n",id,nombre);
+         fscanf(archivo,"%s %s %f %d",&id,&nombre,&precio,&cantidad);
+         printf("%s %s %f %d\n",id,nombre,precio,cantidad);
     }
     fclose(archivo);
 }
