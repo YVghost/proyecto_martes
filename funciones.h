@@ -1,4 +1,7 @@
 void menu();
-void mostrar(int cantidad[7], int id[7], char nombre[7][20], int precio[7]);
-void ingreso(int cantidad[7], int id[7], char nombre[7][20], int precio[7]);
-void eliminar(int cantidad[7], int id[7], char nombre[7][20], int precio[7]);
+int crearArchivo(char nombreArchivo[]);
+void guardarJuguetes(char nombreArchivo[], char nombres[5][4][50]);
+void ingresarJuguete(char nombreArchivo[]);
+void cambiarEstado(char nombreArchivo[],long posicion);
+void eliminar(char nombreArchivo[],long posicion);
+long buscarJuguetePorId(char nombreArchivo[]);

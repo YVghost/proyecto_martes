@@ -9,57 +9,154 @@ void menu() {
     printf("c) MODIFICACION DE PRODUCTO\n");
     printf("d) ELIMINAR PRODUCTOS\n");
 }
+int crearArchivo(char nombreArchivo[])
+{
+    FILE *archivo;
+    archivo = fopen(nombreArchivo, "w+");
+    if (archivo == NULL)
+    {
+        printf("No se puede crear el archivo\n");
+        return 0;
+    }else
+    {
+        printf("Se ha creado el archivo, %s\n",nombreArchivo);
+        fclose(archivo);
+    }   
+    return 1;
+}
 
-void mostrar(int cantidad[7], int id[7], char nombre[7][20], int precio[7]) {
-    printf("Codigo\t\tNombre\t\tCantidad\t\tPrecio\n");
-    for (int i = 0; i < 7; i++) {
-        printf("%d\t\t%s\t\t%d\t\t%d\n", id[i], nombre[i], cantidad[i], precio[i]);
+void guardarJuguetes(char nombreArchivo[], char juguetes[5][4][50])
+{
+    FILE *archivo;
+    archivo = fopen(nombreArchivo, "w+");
+    if (archivo == NULL)
+    {
+        printf("No se puede guardar en el archivo\n");
+    }
+    else
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            fprintf(archivo, "%s %s %s %s\n", juguetes[i][0], juguetes[i][1], juguetes[i][2], juguetes[i][3]);
+        }
+        fclose(archivo);
     }
 }
 
-void ingreso(int cantidad[7], int id[7], char nombre[7][20], int precio[7]) {
-    for (int i = 0; i < 7; i++) {
-        if (id[i] == 0) {
-            printf("Ingrese el id: ");
-            scanf("%d", &id[i]);
-            printf("Ingrese el nombre: ");
-            scanf(" %[^\n]", nombre[i]);
-            printf("Ingrese la cantidad: ");
-            scanf("%d", &cantidad[i]);
-            printf("Ingrese la precio: ");
-            scanf("%d", &precio[i]);            
-            break;
-        }
+void ingresarJuguete(char nombreArchivo[])
+{
+    char id[50];
+    char nombre[50];
+    float precio;
+    int cantidad;
+    FILE *archivo;
+    archivo = fopen(nombreArchivo, "a");
+    if (archivo == NULL)
+    {
+        printf("No se puede escribir en el archivo\n");
+    }
+    else
+    {
+        printf("ID: ");
+        scanf("%s", id);
+        printf("Nombre: ");
+        scanf("%s", nombre);
+        printf("Precio: ");
+        scanf("%f", &precio);
+        printf("Cantidad: ");
+        scanf("%d", &cantidad);
+
+        fprintf(archivo, "%s %s %.2f %d\n", id, nombre, precio, cantidad);
+        fclose(archivo);
     }
 }
 
-void modificar(int cantidad[7], int id[7], char nombre[7][20], int precio[7]) {
-    int codigo;
-    printf("Codigo producto a modificar\n");
-    scanf("%d",&codigo);
-    for (int i = 0; i < 7; i++) {
-        if (id[i] == codigo) {
-            printf("Ingrese la cantidad: ");
-            scanf("%d", &cantidad[i]);
-            printf("Ingrese la precio: ");
-            scanf("%d", &precio[i]);
-            break;
-        }
+void cambiarEstado(char nombreArchivo[], long posicion)
+{
+    FILE *archivo;
+    char id[50];
+    char nombre[50];
+    float precio;
+    int cantidad;
+    int nuevoEstado;
+    
+    printf("Indique el nuevo estado: ");
+    scanf("%d", &nuevoEstado);
+    
+    archivo = fopen(nombreArchivo, "r+");
+    if (archivo == NULL)
+    {
+        printf("No se puede leer el archivo\n");
+    }
+    else
+    {
+        fseek(archivo, posicion, 0);
+        fscanf(archivo, "%s %s %f %d", id, nombre, &precio, &cantidad);
+        fseek(archivo, posicion, 0);
+        fprintf(archivo, "\n%s %s %.2f %d", id, nombre, precio, nuevoEstado);
+        fclose(archivo);
     }
 }
 
-void eliminar(int cantidad[7], int id[7], char nombre[7][20], int precio[7]) {
-    int codigo;
-    printf("Codigo producto a eliminar\n");
-    scanf("%d",&codigo);
+void eliminar(char nombreArchivo[], long posicion)
+{
+    FILE *archivo;
+    char id[50];
+    char nombre[50];
+    float precio;
+    int cantidad;
 
-    for (int i = 0; i < 7; i++) {
-        if (id[i] == codigo) {
-            id[i]=0;
-            strcpy(nombre[i],"Vacio");
-            cantidad[i]=0;
-            precio[i]=0;
-            break;
-        }
+    char idn[50] = {"0000"};
+    char nombren[50] = {"ELIMINADO"};
+    float precion = 0;
+    int cantidadn = 0;
+
+    archivo = fopen(nombreArchivo, "r+");
+    if (archivo == NULL)
+    {
+        printf("No se puede leer el archivo\n");
     }
+    else
+    {
+        fseek(archivo, posicion, 0);
+        fscanf(archivo, "%s %s %f %d", id, nombre, &precio, &cantidad);
+        fseek(archivo, posicion, 0);
+        fprintf(archivo, "\n%s %s %.2f %d", idn, nombren, precion, cantidadn);
+        fclose(archivo);
+    }
+}
+
+long buscarJuguetePorId(char nombreArchivo[])
+{
+    FILE *archivo;
+    char idBuscado[50];
+    char nombreEncontrado[50];
+    float precio;
+    int cantidad;
+    long posicion;
+    char id[50];
+
+    printf("Ingrese el ID a buscar: ");
+    scanf("%s", id);
+
+    archivo = fopen(nombreArchivo, "r+");
+    if (archivo == NULL)
+    {
+        printf("No se puede leer el archivo\n");
+    }
+    else
+    {
+        while (!feof(archivo))
+        {
+            posicion = ftell(archivo);
+            fscanf(archivo, "%s %s %f %d", idBuscado, nombreEncontrado, &precio, &cantidad);
+            if (strcmp(idBuscado, id) == 0)
+            {
+                printf("Se encontró el juguete con el ID %s y nombre %s\n", idBuscado, nombreEncontrado);
+                break;
+            }
+        }
+        fclose(archivo);
+    }
+    return posicion;
 }
